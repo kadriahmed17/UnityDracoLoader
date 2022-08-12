@@ -4,15 +4,16 @@ from conans import ConanFile, CMake, tools
 
 
 class Traact(ConanFile):
-    name = "Unity_CPP_Template"
+    
+    name = "Unity_Draco_Loader"
     version = "0.0.1"    
 
     description = "Template to create a conan/cmake based dll for Unity3D"
     url = ""
     license = ""
-    author = "Frieder Pankratz"
+    author = "Ahmed Kadri"
 
-    generators = "cmake", "virtualenv"
+    generators = "cmake", "virtualrunenv"
     settings = "os", "compiler", "build_type", "arch"
     compiler = "cppstd"
     options = {        
@@ -27,7 +28,8 @@ class Traact(ConanFile):
 
     def requirements(self):
         if self.options.with_tests:
-            self.requires("gtest/1.10.0")        
+            self.requires("gtest/1.10.0")
+        self.requires("draco/1.5.2@camposs/stable")        
 
     def _configure_cmake(self):
         cmake = CMake(self)

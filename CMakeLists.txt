@@ -18,7 +18,7 @@ else ()
     message(FATAL_ERROR "The file conanbuildinfo.cmake doesn't exist, you have to run conan install first")
 endif ()
 
-project(${CONAN_PACKAGE_NAME}_PROJECT VERSION ${CONAN_PACKAGE_VERSION})
+project(${CONAN_PACKAGE_NAME}_PROJECT VERSION ${CONAN_PACKAGE_VERSION} LANGUAGES CXX)
 
 conan_basic_setup(TARGETS)
 
