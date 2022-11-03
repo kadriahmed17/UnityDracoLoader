@@ -1,55 +1,42 @@
 // dllmain.cpp : Defines the entry point for the DLL application.
 
+#include <iostream>
 #include "Unity/IUnityInterface.h"
-#include <string>
-#include <drac>
+#include "DracoFileloader.h"
 
-extern "C" UNITY_INTERFACE_EXPORT int UNITY_INTERFACE_API  PrintInt(int value) {
-	return value * 2;
+std::unique_ptr<DracoFileLoader> dracoFileLoader;
+
+
+extern "C" UNITY_INTERFACE_EXPORT void  UNITY_INTERFACE_API  init()
+{
+	dracoFileLoader = std::make_unique<DracoFileLoader>();
 }
 
-struct Vector3 {
-	float x, y, z;
-};
-
-struct Vector2 {
-	float x, z;
-};
-
-
-
-extern "C" UNITY_INTERFACE_EXPORT bool UNITY_INTERFACE_API  LoadFile(const char* meshFile, const char* imageFile) {
-
-
-	return true;
+extern "C" UNITY_INTERFACE_EXPORT int UNITY_INTERFACE_API loadFile(char* fileName)
+{
+	return dracoFileLoader->loadFile(fileName);
+}
+extern "C" UNITY_INTERFACE_EXPORT int  UNITY_INTERFACE_API getVerticesCount()
+{
+	return dracoFileLoader->getVerticesCount(); //mul by 3
 }
 
 
-extern "C" UNITY_INTERFACE_EXPORT int UNITY_INTERFACE_API  VerticesCount() {
-
-	return 3;
+extern "C" UNITY_INTERFACE_EXPORT int  UNITY_INTERFACE_API getFacesCount()
+{
+	return dracoFileLoader->getFacesCount(); // mul by 3
 }
 
 
-extern "C" UNITY_INTERFACE_EXPORT int UNITY_INTERFACE_API  FacesCount() {
+extern "C" UNITY_INTERFACE_EXPORT bool  UNITY_INTERFACE_API copyData(Vector3 * vertices, int* indices, Vector2 * texCoordinates)
+{
+	return dracoFileLoader->copyData(vertices, indices, texCoordinates);
+}
 
-	return 1;
+extern "C" UNITY_INTERFACE_EXPORT char* UNITY_INTERFACE_API testPath(char* fileName)
+{
+	return fileName;
 }
 
 
-extern "C" UNITY_INTERFACE_EXPORT bool UNITY_INTERFACE_API GetData(Vector3 * vertices, Vector2 * uv, int* verticesIndex) {
-	vertices[0] = { 0,0,0 };
-	vertices[1] = { 1,0,0 };
-	vertices[2] = { 0,1,0 };
-
-	uv[0] = { 0,0 };
-	uv[1] = { 0,0 };
-	uv[2] = { 0,0 };
-
-	verticesIndex[0] = 0;
-	verticesIndex[1] = 2;
-	verticesIndex[2] = 1;
-
-	return true;
-}
 
