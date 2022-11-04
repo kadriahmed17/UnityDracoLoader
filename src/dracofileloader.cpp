@@ -82,9 +82,9 @@ bool DracoFileLoader::copyData(Vector3* vertices, int* indices, Vector2* texCoor
 	// Load triangle indices
 	for (int t = 0; t < mesh_->num_faces(); ++t)
 	{
-		indices[t * 3] = mesh_->face(draco::FaceIndex(t))[0].value();
-		indices[t * 3 + 1] = mesh_->face(draco::FaceIndex(t))[1].value();
-		indices[t * 3 + 2] = mesh_->face(draco::FaceIndex(t))[2].value();
+		indices[t * 3] = mesh_->face(draco::FaceIndex(t))[0].value();		// BL
+		indices[t * 3 + 2] = mesh_->face(draco::FaceIndex(t))[1].value();	// TL
+		indices[t * 3 + 1] = mesh_->face(draco::FaceIndex(t))[2].value();	// BR
 	}
 
 	// Load uv coordinates
